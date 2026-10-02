@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Local data
+server/data/
+*.db
+*.db-shm
+*.db-wal
+
+# Environment
+.env
+.env.*
+
+# Stray compiled TypeScript output
+client/src/**/*.js
+
+# AI assistant files
+.claude/
+CLAUDE.md
+
+# Windows redirect artifacts
+nul
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log

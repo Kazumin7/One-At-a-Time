@@ -1,0 +1,1273 @@
+/* ═══════════════════════════════════════════════════════════════
+   ONE AT A TIME — Cosmic Void Theme
+   Tasks disappear into the cosmos. Focus on what's before you.
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Deep space palette */
+  --void: #06060f;
+  --void-surface: #0d0d1f;
+  --void-elevated: #14142b;
+  --void-border: rgba(139, 92, 246, 0.12);
+  --void-border-hover: rgba(139, 92, 246, 0.25);
+
+  /* Nebula accents */
+  --nebula: #8b5cf6;
+  --nebula-glow: rgba(139, 92, 246, 0.4);
+  --nebula-soft: rgba(139, 92, 246, 0.08);
+  --aurora: #06b6d4;
+  --aurora-glow: rgba(6, 182, 212, 0.35);
+  --supernova: #f59e0b;
+  --supernova-glow: rgba(245, 158, 11, 0.35);
+  --pulsar: #ec4899;
+  --pulsar-glow: rgba(236, 72, 153, 0.3);
+  --stellar-green: #34d399;
+  --stellar-green-glow: rgba(52, 211, 153, 0.35);
+  --danger: #ef4444;
+  --danger-glow: rgba(239, 68, 68, 0.3);
+
+  /* Text */
+  --text-primary: #e8e4f0;
+  --text-secondary: rgba(232, 228, 240, 0.5);
+  --text-dim: rgba(232, 228, 240, 0.25);
+
+  /* Typography */
+  --font-display: 'Outfit', system-ui, sans-serif;
+  --font-mono: 'Space Mono', 'Courier New', monospace;
+
+  /* Spacing & Shape */
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-pill: 999px;
+
+  /* Shadows & Glow */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.5);
+  --shadow-glow-nebula: 0 0 30px rgba(139, 92, 246, 0.15), 0 0 80px rgba(139, 92, 246, 0.05);
+  --shadow-glow-aurora: 0 0 30px rgba(6, 182, 212, 0.15), 0 0 80px rgba(6, 182, 212, 0.05);
+}
+
+/* ─── Reset ─── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ─── Body & Background ─── */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-display);
+  background: var(--void);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Starfield canvas rendered by App.tsx */
+.starfield-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Nebula gradient overlay behind content */
+.cosmic-gradient {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 80%, rgba(139, 92, 246, 0.10) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 80% 20%, rgba(6, 182, 212, 0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 90% 60% at 50% 50%, rgba(236, 72, 153, 0.04) 0%, transparent 70%);
+}
+
+/* ─── Container ─── */
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+}
+
+/* ─── Animations ─── */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to { opacity: 0; transform: translateY(-20px) scale(0.95); }
+}
+
+@keyframes cosmicFadeIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); filter: blur(4px); }
+  to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+@keyframes voidPulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.08); }
+  50% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.18), 0 0 80px rgba(139, 92, 246, 0.06); }
+}
+
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+@keyframes orbitSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes sendToVoid {
+  0% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+  60% { opacity: 0.6; transform: scale(0.85) translateY(-30px); filter: blur(2px); }
+  100% { opacity: 0; transform: scale(0.4) translateY(-80px); filter: blur(8px); }
+}
+
+@keyframes emergeFromVoid {
+  0% { opacity: 0; transform: scale(0.8) translateY(30px); filter: blur(6px); }
+  50% { opacity: 0.7; transform: scale(0.95) translateY(8px); filter: blur(1px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes gentleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes completionBurst {
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.08); }
+  100% { opacity: 0; transform: scale(0.3) translateY(-60px); filter: blur(12px); }
+}
+
+@keyframes captureToVoid {
+  0% {
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(1) translateY(0);
+    filter: blur(0);
+    text-shadow: 0 0 0 transparent;
+  }
+  30% {
+    opacity: 0.75;
+    transform: translate(-50%, -50%) scale(0.92) translateY(-40px);
+    filter: blur(0.5px);
+    text-shadow: 0 0 8px rgba(139, 92, 246, 0.5);
+  }
+  60% {
+    opacity: 0.4;
+    transform: translate(-50%, -50%) scale(0.7) translateY(-100px);
+    filter: blur(2px);
+    text-shadow: 0 0 20px rgba(139, 92, 246, 0.8), 0 0 40px rgba(6, 182, 212, 0.3);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3) translateY(-180px);
+    filter: blur(8px);
+    text-shadow: 0 0 30px rgba(139, 92, 246, 1), 0 0 60px rgba(6, 182, 212, 0.5);
+  }
+}
+
+/* Ghost text that floats into the void on task capture */
+.void-ghost-text {
+  pointer-events: none;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  animation: captureToVoid 0.85s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  will-change: transform, opacity, filter;
+}
+
+.fade-in {
+  animation: emergeFromVoid 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.fade-out {
+  animation: sendToVoid 0.45s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FOCUS VIEW — One task emerges from the void
+   ═══════════════════════════════════════════════════════════════ */
+
+.focus-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 85vh;
+  animation: cosmicFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.focus-header {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.focus-date-picker .date-picker-trigger {
+  font-size: 0.95rem;
+  font-weight: 500;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: color 0.3s;
+  letter-spacing: 0.04em;
+}
+
+.focus-date-picker .date-picker-trigger:hover {
+  color: var(--nebula);
+}
+
+/* ─── Task Capture (Focus Mode) ─── */
+
+.task-capture-form {
+  width: 100%;
+  margin-bottom: 3rem;
+}
+
+.task-capture-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.task-capture-row .task-capture-input {
+  flex: 1;
+}
+
+.task-capture-input {
+  width: 100%;
+  padding: 0.75rem 0;
+  font-size: 1rem;
+  font-family: var(--font-display);
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  border: none;
+  border-bottom: 1px solid var(--void-border);
+  background: transparent;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.task-capture-input:focus {
+  border-bottom-color: var(--nebula);
+  box-shadow: 0 1px 0 0 var(--nebula);
+}
+
+.task-capture-input::placeholder {
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+.task-capture-date-picker .date-picker-trigger {
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  color: var(--aurora);
+  white-space: nowrap;
+  padding: 0.35rem 0.65rem;
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  border-radius: var(--radius-pill);
+  background: rgba(6, 182, 212, 0.06);
+  transition: all 0.25s;
+  letter-spacing: 0.02em;
+}
+
+.task-capture-date-picker .date-picker-trigger:hover {
+  background: rgba(6, 182, 212, 0.12);
+  border-color: rgba(6, 182, 212, 0.4);
+  box-shadow: 0 0 16px rgba(6, 182, 212, 0.1);
+}
+
+.task-capture-date-picker .date-picker-dropdown {
+  right: 0;
+  left: auto;
+}
+
+.task-capture-submit {
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: var(--nebula);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 300;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 0 12px var(--nebula-glow);
+}
+
+.task-capture-submit:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 24px var(--nebula-glow);
+}
+
+/* ─── Task Display (Current Task) ─── */
+
+.task-display {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 0;
+  width: 100%;
+}
+
+.task-description {
+  font-size: 3rem;
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0 0 1.25rem;
+  word-break: break-word;
+  background: linear-gradient(135deg, var(--text-primary) 0%, rgba(139, 92, 246, 0.7) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gentleFloat 6s ease-in-out infinite;
+}
+
+.task-time {
+  font-size: 0.95rem;
+  font-family: var(--font-mono);
+  color: var(--aurora);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+}
+
+.task-location {
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+  letter-spacing: 0.03em;
+}
+
+/* ─── Complete Button ─── */
+
+.complete-btn {
+  margin-top: 3rem;
+  padding: 1rem 3rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-family: var(--font-display);
+  color: var(--void);
+  background: var(--stellar-green);
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100%;
+  max-width: 320px;
+  box-shadow: 0 0 20px var(--stellar-green-glow), 0 4px 16px rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+}
+
+.complete-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  transition: left 0.5s;
+}
+
+.complete-btn:hover:not(:disabled)::before {
+  left: 100%;
+}
+
+.complete-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px var(--stellar-green-glow), 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.complete-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.complete-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ─── Empty / Done Messages ─── */
+
+.empty-message {
+  font-size: 1.2rem;
+  color: var(--text-dim);
+  text-align: center;
+  font-weight: 300;
+  letter-spacing: 0.03em;
+}
+
+.done-message {
+  font-size: 1.5rem;
+  text-align: center;
+  font-weight: 300;
+  background: linear-gradient(135deg, var(--stellar-green) 0%, var(--aurora) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.02em;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PLANNING VIEW — Chart your constellation
+   ═══════════════════════════════════════════════════════════════ */
+
+.planning-view {
+  padding-bottom: 5rem;
+  animation: cosmicFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.planning-header {
+  margin-bottom: 2.5rem;
+}
+
+.planning-header h1 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin: 0 0 0.35rem;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.planning-header .date {
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+.planning-date-picker .date-picker-trigger {
+  font-size: 0.95rem;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+  padding: 0.2rem 0.4rem;
+  margin-left: -0.4rem;
+  text-decoration: none;
+  border-bottom: 1px dashed var(--void-border);
+  transition: all 0.25s;
+  letter-spacing: 0.02em;
+}
+
+.planning-date-picker .date-picker-trigger:hover {
+  color: var(--nebula);
+  border-bottom-color: var(--nebula);
+}
+
+/* ─── Task Form ─── */
+
+.task-form {
+  background: var(--void-surface);
+  border: 1px solid var(--void-border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.task-form:focus-within {
+  border-color: var(--void-border-hover);
+  box-shadow: var(--shadow-glow-nebula);
+}
+
+.task-form .form-row {
+  margin-bottom: 0.75rem;
+}
+
+.task-form input[type='text'] {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.95rem;
+  font-family: var(--font-display);
+  font-weight: 400;
+  border: 1px solid var(--void-border);
+  border-radius: var(--radius-sm);
+  background: var(--void);
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.25s, box-shadow 0.25s;
+  letter-spacing: 0.01em;
+}
+
+.task-form input[type='text']:focus {
+  border-color: var(--nebula);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.task-form input[type='text']::placeholder {
+  color: var(--text-dim);
+}
+
+.task-form .time-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.task-form .time-row input[type='time'] {
+  flex: 1;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.9rem;
+  font-family: var(--font-mono);
+  border: 1px solid var(--void-border);
+  border-radius: var(--radius-sm);
+  background: var(--void);
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.25s, box-shadow 0.25s;
+  color-scheme: dark;
+}
+
+.task-form .time-row input[type='time']:focus {
+  border-color: var(--nebula);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.task-form .time-separator {
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+}
+
+.task-form .form-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+/* ─── Buttons ─── */
+
+.btn-primary {
+  padding: 0.6rem 1.4rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-family: var(--font-display);
+  color: white;
+  background: var(--nebula);
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all 0.25s;
+  letter-spacing: 0.04em;
+  box-shadow: 0 0 16px rgba(139, 92, 246, 0.2);
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 0 24px rgba(139, 92, 246, 0.35);
+}
+
+.btn-primary:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.btn-ghost {
+  padding: 0.6rem 1.25rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  font-family: var(--font-display);
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-ghost:hover {
+  background: var(--nebula-soft);
+  color: var(--text-primary);
+}
+
+/* ─── Task List ─── */
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.task-list-empty {
+  text-align: center;
+  color: var(--text-dim);
+  padding: 3rem 2rem;
+  font-size: 0.9rem;
+  font-weight: 300;
+  letter-spacing: 0.03em;
+  border: 1px dashed var(--void-border);
+  border-radius: var(--radius);
+}
+
+/* ─── Task Card ─── */
+
+.task-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background: var(--void-surface);
+  border: 1px solid var(--void-border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.25s;
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.task-card:hover {
+  border-color: var(--void-border-hover);
+  box-shadow: var(--shadow-glow-nebula);
+  transform: translateY(-1px);
+}
+
+.task-card.dragging {
+  box-shadow: var(--shadow-glow-nebula);
+  opacity: 0.85;
+  border-color: var(--nebula);
+}
+
+.drag-handle {
+  cursor: grab;
+  color: var(--text-dim);
+  padding: 0.25rem;
+  font-size: 1.1rem;
+  line-height: 1;
+  user-select: none;
+  flex-shrink: 0;
+  touch-action: none;
+  transition: color 0.2s;
+}
+
+.drag-handle:hover {
+  color: var(--nebula);
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+.task-card-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.task-card-description {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  word-break: break-word;
+  color: var(--text-primary);
+}
+
+.task-card-meta {
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+}
+
+.task-card-actions {
+  display: flex;
+  gap: 0.25rem;
+  flex-shrink: 0;
+}
+
+.btn-icon {
+  padding: 0.4rem 0.5rem;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-icon:hover {
+  background: var(--nebula-soft);
+  color: var(--text-primary);
+}
+
+.btn-icon.danger:hover {
+  color: var(--danger);
+  background: rgba(239, 68, 68, 0.08);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   END DAY / START DAY — Phase transition buttons
+   ═══════════════════════════════════════════════════════════════ */
+
+.end-day-button,
+.start-day-button {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  padding: 0.75rem 1.75rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-family: var(--font-display);
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  z-index: 100;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.end-day-button {
+  background: linear-gradient(135deg, var(--supernova) 0%, #f97316 100%);
+  color: var(--void);
+  box-shadow: 0 0 24px var(--supernova-glow), 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.end-day-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px var(--supernova-glow), 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.end-day-button:active {
+  transform: scale(0.96);
+}
+
+.start-day-button {
+  background: linear-gradient(135deg, var(--nebula) 0%, var(--aurora) 100%);
+  color: white;
+  box-shadow: 0 0 24px var(--nebula-glow), 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.start-day-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px var(--nebula-glow), 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.start-day-button:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.start-day-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ─── End Day Confirmation ─── */
+
+.end-day-confirm {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: var(--void-elevated);
+  border: 1px solid var(--void-border-hover);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(139, 92, 246, 0.08);
+  z-index: 100;
+  max-width: 300px;
+  animation: cosmicFadeIn 0.3s ease-out;
+}
+
+.end-day-confirm p {
+  margin: 0 0 1.25rem;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+  font-weight: 300;
+}
+
+.end-day-confirm-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DATE PICKER — Stellar navigator
+   ═══════════════════════════════════════════════════════════════ */
+
+.date-picker {
+  position: relative;
+  display: inline-block;
+}
+
+.date-picker-trigger {
+  background: none;
+  border: none;
+  font-family: var(--font-display);
+  font-size: inherit;
+  color: inherit;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s;
+}
+
+.date-picker-trigger:hover {
+  background: var(--nebula-soft);
+}
+
+.date-picker-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 200;
+  background: var(--void-elevated);
+  border: 1px solid var(--void-border-hover);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6), 0 0 40px rgba(139, 92, 246, 0.06);
+  padding: 1.25rem;
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 0.5rem;
+  animation: cosmicFadeIn 0.2s ease-out;
+}
+
+.month-grid {
+  width: 224px;
+}
+
+.month-grid-title {
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-bottom: 0.6rem;
+  text-align: center;
+  color: var(--text-primary);
+  letter-spacing: 0.03em;
+}
+
+.month-grid-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  color: var(--text-dim);
+  margin-bottom: 0.35rem;
+  letter-spacing: 0.05em;
+}
+
+.month-grid-body {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.month-grid-cell {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+  font-family: var(--font-display);
+  border: none;
+  background: none;
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all 0.15s;
+}
+
+.month-grid-cell:hover:not(.empty):not(.selected) {
+  background: var(--nebula-soft);
+  color: var(--text-primary);
+}
+
+.month-grid-cell.selected {
+  background: var(--nebula);
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 0 12px var(--nebula-glow);
+}
+
+.month-grid-cell.empty {
+  cursor: default;
+}
+
+/* ─── Version Label ─── */
+
+.version-label {
+  position: fixed;
+  bottom: 0.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.65rem;
+  font-family: var(--font-mono);
+  color: var(--text-dim);
+  opacity: 0.65;
+  pointer-events: none;
+  z-index: 1;
+  letter-spacing: 0.04em;
+}
+
+/* ─── Calendar Toggle Button ─── */
+
+.calendar-toggle-button {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  width: 48px;
+  height: 48px;
+  font-size: 1.3rem;
+  background: var(--void-elevated);
+  border: 1px solid var(--void-border);
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 100;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  color: var(--text-secondary);
+}
+
+.calendar-toggle-button:hover {
+  border-color: var(--void-border-hover);
+  box-shadow: var(--shadow-glow-nebula);
+  color: var(--nebula);
+  transform: translateY(-2px);
+}
+
+.calendar-toggle-button:active {
+  transform: scale(0.93);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CALENDAR VIEW — Star chart
+   ═══════════════════════════════════════════════════════════════ */
+
+.calendar-view {
+  padding-bottom: 2rem;
+  animation: cosmicFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.calendar-header h1 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.calendar-months {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.calendar-month {
+  background: var(--void-surface);
+  border: 1px solid var(--void-border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.calendar-month-title {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  text-align: center;
+  letter-spacing: 0.03em;
+}
+
+.calendar-grid-header {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 2px;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  color: var(--text-dim);
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+}
+
+.calendar-grid-header span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calendar-grid-body {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 2px;
+}
+
+.calendar-cell {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.85rem;
+  position: relative;
+  min-height: 0;
+  min-width: 0;
+  color: var(--text-secondary);
+}
+
+.calendar-cell.empty {
+  /* blank spacer */
+}
+
+.calendar-cell.today {
+  background: var(--nebula);
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 0 16px var(--nebula-glow);
+}
+
+.calendar-cell.today .calendar-cell-badge {
+  background: white;
+  color: var(--nebula);
+}
+
+.calendar-cell-day {
+  line-height: 1;
+}
+
+.calendar-cell-badge {
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.6rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  background: var(--nebula);
+  color: white;
+  border-radius: var(--radius-pill);
+  min-width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+}
+
+.calendar-cell.has-tasks:not(.today) {
+  background: var(--nebula-soft);
+  cursor: pointer;
+}
+
+/* ─── Calendar Tooltip ─── */
+
+.calendar-tooltip {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 300;
+  background: var(--void-elevated);
+  border: 1px solid var(--void-border-hover);
+  border-radius: var(--radius);
+  padding: 0.75rem 0.85rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 24px rgba(139, 92, 246, 0.08);
+  min-width: 180px;
+  max-width: 240px;
+  pointer-events: none;
+  animation: cosmicFadeIn 0.15s ease-out;
+  white-space: normal;
+}
+
+.calendar-tooltip.tooltip-right {
+  left: calc(100% + 10px);
+}
+
+.calendar-tooltip.tooltip-left {
+  right: calc(100% + 10px);
+  left: auto;
+}
+
+.calendar-tooltip-header {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--nebula);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--void-border);
+}
+
+.calendar-tooltip-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.calendar-tooltip-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.calendar-tooltip-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--nebula);
+  box-shadow: 0 0 6px var(--nebula-glow);
+  flex-shrink: 0;
+  margin-top: 0.4rem;
+}
+
+.calendar-tooltip-task {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.calendar-tooltip-desc {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.calendar-tooltip-time {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--aurora);
+  letter-spacing: 0.03em;
+}
+
+.calendar-tooltip-loading,
+.calendar-tooltip-empty {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  font-style: italic;
+  list-style: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   JOURNAL TASKS — Warm amber glow for "j-" prefixed entries
+   ═══════════════════════════════════════════════════════════════ */
+
+.journal-icon {
+  display: inline-block;
+  margin-right: 0.4em;
+  font-style: normal;
+  filter: drop-shadow(0 0 6px var(--supernova-glow));
+}
+
+/* Focus view — journal styling */
+.task-display.journal-task .task-description {
+  background: linear-gradient(135deg, var(--supernova) 0%, #fbbf24 40%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.task-display.journal-task .journal-icon {
+  font-size: 0.6em;
+  vertical-align: super;
+  -webkit-text-fill-color: var(--supernova);
+  animation: starTwinkle 3s ease-in-out infinite;
+}
+
+/* Planning view — journal card styling */
+.task-card.journal-task {
+  border-color: rgba(245, 158, 11, 0.2);
+  background: linear-gradient(135deg, var(--void-surface) 0%, rgba(245, 158, 11, 0.04) 100%);
+}
+
+.task-card.journal-task:hover {
+  border-color: rgba(245, 158, 11, 0.35);
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.1), 0 0 80px rgba(245, 158, 11, 0.04);
+}
+
+.task-card.journal-task .task-card-description {
+  color: #fbbf24;
+}
+
+.task-card.journal-task .journal-icon {
+  font-size: 0.75em;
+  color: var(--supernova);
+  -webkit-text-fill-color: var(--supernova);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE (continued)
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 400px) {
+  .task-description {
+    font-size: 2.2rem;
+  }
+
+  .task-form .time-row {
+    flex-direction: column;
+  }
+
+  .task-form .time-separator {
+    display: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .date-picker-dropdown {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}

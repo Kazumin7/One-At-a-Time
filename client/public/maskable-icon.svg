@@ -1,0 +1,180 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <!-- Deep space background gradient -->
+    <radialGradient id="bg" cx="50%" cy="60%" r="70%">
+      <stop offset="0%" stop-color="#12113a"/>
+      <stop offset="45%" stop-color="#0a0a24"/>
+      <stop offset="100%" stop-color="#04040d"/>
+    </radialGradient>
+
+    <!-- Milky Way band -->
+    <radialGradient id="milky" cx="35%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="rgba(160,140,220,0.18)"/>
+      <stop offset="40%" stop-color="rgba(100,80,180,0.08)"/>
+      <stop offset="100%" stop-color="rgba(100,80,180,0)"/>
+    </radialGradient>
+
+    <!-- Nebula cloud 1 — purple -->
+    <radialGradient id="neb1" cx="30%" cy="35%" r="30%">
+      <stop offset="0%" stop-color="rgba(139,92,246,0.30)"/>
+      <stop offset="50%" stop-color="rgba(139,92,246,0.10)"/>
+      <stop offset="100%" stop-color="rgba(139,92,246,0)"/>
+    </radialGradient>
+
+    <!-- Nebula cloud 2 — cyan/teal -->
+    <radialGradient id="neb2" cx="72%" cy="55%" r="25%">
+      <stop offset="0%" stop-color="rgba(6,182,212,0.22)"/>
+      <stop offset="50%" stop-color="rgba(6,182,212,0.07)"/>
+      <stop offset="100%" stop-color="rgba(6,182,212,0)"/>
+    </radialGradient>
+
+    <!-- Nebula cloud 3 — warm pink -->
+    <radialGradient id="neb3" cx="55%" cy="25%" r="20%">
+      <stop offset="0%" stop-color="rgba(236,72,153,0.14)"/>
+      <stop offset="60%" stop-color="rgba(236,72,153,0.04)"/>
+      <stop offset="100%" stop-color="rgba(236,72,153,0)"/>
+    </radialGradient>
+
+    <!-- "1" text gradient -->
+    <linearGradient id="numGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e8e4f0"/>
+      <stop offset="100%" stop-color="#c4b5fd"/>
+    </linearGradient>
+
+    <!-- Star glow filter -->
+    <filter id="starglow" x="-200%" y="-200%" width="500%" height="500%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Bright star glow filter -->
+    <filter id="brightglow" x="-300%" y="-300%" width="700%" height="700%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Soft outer glow for the moon -->
+    <filter id="moonaura" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="14" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Full bleed background (no rounded corners — the OS applies its own mask) -->
+  <rect width="512" height="512" fill="url(#bg)"/>
+
+  <!-- Milky way band -->
+  <ellipse cx="180" cy="200" rx="320" ry="180" fill="url(#milky)" transform="rotate(-25 256 256)"/>
+
+  <!-- Nebula clouds -->
+  <circle cx="155" cy="180" r="160" fill="url(#neb1)"/>
+  <circle cx="370" cy="280" r="130" fill="url(#neb2)"/>
+  <circle cx="280" cy="130" r="110" fill="url(#neb3)"/>
+
+  <!-- Background stars (spread across full area) -->
+  <circle cx="42" cy="38" r="1.0" fill="#c8beff" opacity="0.30"/>
+  <circle cx="95" cy="72" r="0.8" fill="#e8e4f0" opacity="0.25"/>
+  <circle cx="160" cy="28" r="1.1" fill="#b4dcff" opacity="0.28"/>
+  <circle cx="310" cy="35" r="0.9" fill="#e8e4f0" opacity="0.30"/>
+  <circle cx="378" cy="52" r="1.0" fill="#ffd2b4" opacity="0.25"/>
+  <circle cx="455" cy="42" r="0.8" fill="#c8beff" opacity="0.28"/>
+  <circle cx="480" cy="95" r="1.0" fill="#a0f0e6" opacity="0.22"/>
+  <circle cx="30" cy="130" r="0.9" fill="#e8e4f0" opacity="0.26"/>
+  <circle cx="70" cy="185" r="0.7" fill="#c8beff" opacity="0.20"/>
+  <circle cx="38" cy="260" r="1.0" fill="#b4dcff" opacity="0.25"/>
+  <circle cx="62" cy="340" r="0.8" fill="#e8e4f0" opacity="0.28"/>
+  <circle cx="28" cy="410" r="0.9" fill="#c8beff" opacity="0.22"/>
+  <circle cx="55" cy="465" r="1.1" fill="#ffd2b4" opacity="0.26"/>
+  <circle cx="475" cy="160" r="0.8" fill="#c8beff" opacity="0.24"/>
+  <circle cx="450" cy="230" r="0.9" fill="#e8e4f0" opacity="0.20"/>
+  <circle cx="488" cy="310" r="0.7" fill="#b4dcff" opacity="0.25"/>
+  <circle cx="468" cy="385" r="1.0" fill="#c8beff" opacity="0.28"/>
+  <circle cx="490" cy="450" r="0.8" fill="#e8e4f0" opacity="0.22"/>
+  <circle cx="120" cy="475" r="0.9" fill="#a0f0e6" opacity="0.24"/>
+  <circle cx="200" cy="490" r="0.7" fill="#c8beff" opacity="0.26"/>
+  <circle cx="360" cy="475" r="0.8" fill="#ffd2b4" opacity="0.25"/>
+  <circle cx="145" cy="145" r="0.8" fill="#e6c8ff" opacity="0.24"/>
+  <circle cx="340" cy="155" r="0.9" fill="#b4dcff" opacity="0.26"/>
+  <circle cx="385" cy="340" r="0.8" fill="#c8beff" opacity="0.25"/>
+  <circle cx="420" cy="420" r="1.0" fill="#b4dcff" opacity="0.22"/>
+  <circle cx="250" cy="430" r="0.9" fill="#c8beff" opacity="0.20"/>
+
+  <!-- Medium stars with glow -->
+  <circle cx="78" cy="55" r="1.5" fill="#c8beff" opacity="0.50" filter="url(#starglow)"/>
+  <circle cx="430" cy="68" r="1.6" fill="#ffd2b4" opacity="0.50" filter="url(#starglow)"/>
+  <circle cx="470" cy="140" r="1.3" fill="#e8e4f0" opacity="0.48" filter="url(#starglow)"/>
+  <circle cx="48" cy="200" r="1.5" fill="#a0f0e6" opacity="0.45" filter="url(#starglow)"/>
+  <circle cx="35" cy="370" r="1.4" fill="#c8beff" opacity="0.50" filter="url(#starglow)"/>
+  <circle cx="480" cy="380" r="1.3" fill="#e6c8ff" opacity="0.48" filter="url(#starglow)"/>
+  <circle cx="100" cy="450" r="1.5" fill="#b4dcff" opacity="0.50" filter="url(#starglow)"/>
+  <circle cx="455" cy="470" r="1.6" fill="#ffd2b4" opacity="0.50" filter="url(#starglow)"/>
+  <circle cx="160" cy="105" r="1.4" fill="#e8e4f0" opacity="0.48" filter="url(#starglow)"/>
+  <circle cx="395" cy="125" r="1.3" fill="#c8beff" opacity="0.45" filter="url(#starglow)"/>
+  <circle cx="110" cy="250" r="1.5" fill="#ffd2b4" opacity="0.50" filter="url(#starglow)"/>
+  <circle cx="155" cy="420" r="1.3" fill="#a0f0e6" opacity="0.45" filter="url(#starglow)"/>
+
+  <!-- Bright feature stars -->
+  <g filter="url(#brightglow)" opacity="0.80">
+    <circle cx="115" cy="105" r="2.5" fill="#e0d8ff"/>
+    <line x1="107" y1="105" x2="123" y2="105" stroke="#e0d8ff" stroke-width="0.8" opacity="0.6"/>
+    <line x1="115" y1="97" x2="115" y2="113" stroke="#e0d8ff" stroke-width="0.8" opacity="0.6"/>
+  </g>
+  <g filter="url(#brightglow)" opacity="0.75">
+    <circle cx="400" cy="90" r="2.2" fill="#b4dcff"/>
+    <line x1="393" y1="90" x2="407" y2="90" stroke="#b4dcff" stroke-width="0.7" opacity="0.5"/>
+    <line x1="400" y1="83" x2="400" y2="97" stroke="#b4dcff" stroke-width="0.7" opacity="0.5"/>
+  </g>
+  <g filter="url(#brightglow)" opacity="0.70">
+    <circle cx="80" cy="380" r="2.0" fill="#ffd2b4"/>
+    <line x1="73" y1="380" x2="87" y2="380" stroke="#ffd2b4" stroke-width="0.7" opacity="0.5"/>
+    <line x1="80" y1="373" x2="80" y2="387" stroke="#ffd2b4" stroke-width="0.7" opacity="0.5"/>
+  </g>
+  <g filter="url(#brightglow)" opacity="0.72">
+    <circle cx="435" cy="420" r="2.3" fill="#a0f0e6"/>
+    <line x1="427" y1="420" x2="443" y2="420" stroke="#a0f0e6" stroke-width="0.7" opacity="0.5"/>
+    <line x1="435" y1="412" x2="435" y2="428" stroke="#a0f0e6" stroke-width="0.7" opacity="0.5"/>
+  </g>
+
+  <!-- ═══ CRESCENT MOON (within safe zone — centered) ═══ -->
+  <!-- Outer aura glow -->
+  <circle cx="256" cy="225" r="80" fill="rgba(200,190,255,0.06)" filter="url(#moonaura)"/>
+
+  <!-- Moon body -->
+  <circle cx="256" cy="225" r="65" fill="rgba(232,228,240,0.92)"/>
+  <!-- Shadow circle for crescent -->
+  <circle cx="284" cy="210" r="56" fill="url(#bg)"/>
+
+  <!-- Moon surface texture -->
+  <circle cx="238" cy="248" r="5" fill="rgba(200,190,240,0.15)"/>
+  <circle cx="230" cy="228" r="3.5" fill="rgba(200,190,240,0.10)"/>
+  <circle cx="242" cy="265" r="3" fill="rgba(200,190,240,0.12)"/>
+  <circle cx="222" cy="245" r="2.5" fill="rgba(200,190,240,0.08)"/>
+
+  <!-- Crescent edge glow -->
+  <circle cx="256" cy="225" r="65" fill="none" stroke="rgba(232,228,240,0.15)" stroke-width="1.2"/>
+
+  <!-- ═══ NUMBER "1" ═══ -->
+  <text x="256" y="378" text-anchor="middle"
+        font-family="'Outfit', system-ui, sans-serif"
+        font-weight="700" font-size="95"
+        fill="url(#numGrad)" opacity="0.88"
+        letter-spacing="-2">1</text>
+
+  <!-- Subtle "1" glow -->
+  <text x="256" y="378" text-anchor="middle"
+        font-family="'Outfit', system-ui, sans-serif"
+        font-weight="700" font-size="95"
+        fill="rgba(139,92,246,0.20)" opacity="0.60"
+        letter-spacing="-2"
+        filter="url(#moonaura)">1</text>
+</svg>

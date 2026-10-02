@@ -1,0 +1,21 @@
+{
+  "name": "one-at-a-time",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev": "concurrently -n client,server -c cyan,yellow \"npm run dev:client\" \"npm run dev:server\"",
+    "dev:client": "npm run dev --workspace=client -- --host",
+    "dev:server": "npm run dev --workspace=server",
+    "tunnel": "concurrently -n client,server,tunnel -c cyan,yellow,magenta \"npm run dev:client\" \"npm run dev:server\" \"cloudflared tunnel --url localhost:5173\"",
+    "build": "npm run build --workspace=server && npm run build --workspace=client",
+    "start": "NODE_ENV=production node server/dist/index.js",
+    "cleanup": "cmd /c \"(FOR /F \"tokens=5\" %a IN ('netstat -ano ^| findstr \":3006 :5173\" ^| findstr LISTENING') DO taskkill /PID %a /F) 2>nul || echo Ports 3006 and 5173 are already free\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
